@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export", // ✅ required for Netlify manual deploy
+  // ✅ required for Netlify manual deploy
 
   images: {
     remotePatterns: [
