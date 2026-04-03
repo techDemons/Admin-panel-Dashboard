@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export", // ✅ required for Netlify manual deploy
+
   images: {
     remotePatterns: [
       {
@@ -8,6 +10,7 @@ const nextConfig: NextConfig = {
         hostname: "img.youtube.com",
       },
     ],
+    unoptimized: true, // ✅ important for static export (Next/Image fix)
   },
 };
 
