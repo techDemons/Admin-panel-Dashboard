@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, DollarSign, Users, TrendingDown } from "lucide-react";
+import { CreditCard, DollarSign, Users, Crown } from "lucide-react";
 
 const stats = [
   {
@@ -31,11 +31,11 @@ const stats = [
     bg: "bg-violet-500/10",
   },
   {
-    label: "Churn Rate",
-    value: "3.2%",
-    trend: "↑0.4% from last month",
-    trendUp: false,
-    icon: TrendingDown,
+    label: "Paid Subscribers",
+    value: "350",
+    trend: "↑6% from last month",
+    trendUp: true,
+    icon: Crown,
     color: "text-amber-500",
     bg: "bg-amber-500/10",
   },

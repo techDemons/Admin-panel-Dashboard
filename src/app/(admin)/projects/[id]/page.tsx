@@ -175,7 +175,7 @@ export default function ProjectDetailPage() {
           </p>
           <p className="text-sm text-muted-foreground">
             Total Combinations ({project.totalVideos} videos x{" "}
-            {project.combinationMultiplier} multiplier)
+            {project.combinationMultiplier} variations)
           </p>
         </div>
       </div>

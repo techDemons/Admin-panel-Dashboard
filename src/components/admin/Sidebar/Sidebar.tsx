@@ -17,8 +17,9 @@ import {
   ChevronLeft,
   Menu,
   X,
+  User,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 const navItems = [
@@ -32,10 +33,22 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { logout } = useAuth();
+  const { logout, profile } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [avatarMenu, setAvatarMenu] = useState(false);
+  const avatarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (avatarRef.current && !avatarRef.current.contains(e.target as Node)) {
+        setAvatarMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -151,14 +164,61 @@ export default function Sidebar() {
               <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
             )}
           </button>
-          <button
-            onClick={logout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
-            title={collapsed ? "Logout" : undefined}
-          >
-            <LogOut size={20} className="shrink-0" />
-            {!collapsed && <span>Logout</span>}
-          </button>
+
+          {/* Admin Avatar */}
+          <div ref={avatarRef} className="relative">
+            <button
+              onClick={() => setAvatarMenu(!avatarMenu)}
+              className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors ${
+                avatarMenu ? "bg-muted text-foreground" : ""
+              }`}
+              title={collapsed ? profile.name : undefined}
+            >
+              {profile.image ? (
+                <Image
+                  src={profile.image}
+                  alt={profile.name}
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full object-cover shrink-0"
+                />
+              ) : (
+                <span className="w-7 h-7 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center shrink-0">
+                  {profile.name.charAt(0).toUpperCase()}
+                </span>
+              )}
+              {!collapsed && (
+                <span className="truncate">{profile.name}</span>
+              )}
+            </button>
+
+            {/* Popover Menu */}
+            {avatarMenu && (
+              <div className="absolute bottom-full left-0 mb-2 w-48 bg-card border border-border rounded-xl shadow-lg overflow-hidden z-50">
+                <Link
+                  href="/profile"
+                  onClick={() => {
+                    setAvatarMenu(false);
+                    setMobileOpen(false);
+                  }}
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                >
+                  <User size={16} className="shrink-0" />
+                  Profile
+                </Link>
+                <button
+                  onClick={() => {
+                    setAvatarMenu(false);
+                    logout();
+                  }}
+                  className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                >
+                  <LogOut size={16} className="shrink-0" />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </aside>
     </>

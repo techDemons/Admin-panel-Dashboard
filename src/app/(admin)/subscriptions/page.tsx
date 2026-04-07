@@ -80,14 +80,14 @@ export default function SubscriptionsPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
             <h3 className="text-lg font-semibold text-black mb-4">
-              {confirmModal.action === "cancel"
-                ? "Cancel Subscription"
-                : "Activate Subscription"}
+              {confirmModal.action === "activate"
+                ? "Activate Subscription"
+                : "Suspend Subscription"}
             </h3>
             <p className="text-sm text-black/60 mb-5">
-              {confirmModal.action === "cancel"
-                ? "Do you want to cancel this subscription?"
-                : "Do you want to reactivate this subscription?"}
+              {confirmModal.action === "activate"
+                ? "Do you want to activate this subscription?"
+                : "Do you want to cancel this subscription?"}
             </p>
             <div className="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-5 space-y-3">
               <div className="flex items-center gap-2">
@@ -126,17 +126,17 @@ export default function SubscriptionsPage() {
                 }
                 className="px-4 py-2 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors"
               >
-                Cancel
+                Close
               </button>
               <button
                 onClick={handleConfirm}
                 className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors ${
-                  confirmModal.action === "cancel"
-                    ? "bg-red-600 hover:bg-red-700"
-                    : "bg-emerald-600 hover:bg-emerald-700"
+                  confirmModal.action === "activate"
+                    ? "bg-emerald-600 hover:bg-emerald-700"
+                    : "bg-red-600 hover:bg-red-700"
                 }`}
               >
-                  {confirmModal.action === "cancel" ? "Deactivate Subscription" : "Activate"}
+                {confirmModal.action === "activate" ? "Activate" : "Cancel Subscription"}
               </button>
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function SubscriptionsPage() {
           >
             <option value="All">All Status</option>
             <option value="Active">Active</option>
-            <option value="Cancelled">Cancelled</option>
+            <option value="Deactivated">Deactivated</option>
             <option value="Expired">Expired</option>
           </select>
           <ChevronDown
@@ -280,7 +280,7 @@ export default function SubscriptionsPage() {
                           }
                           className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 min-w-[104px] text-xs font-semibold rounded-md border border-red-500/60 text-red-600 hover:bg-red-500/10 hover:border-red-500 transition-colors"
                         >
-                          Deactivate
+                          Suspend
                         </button>
                       )}
                       {(sub.status === "Cancelled" ||

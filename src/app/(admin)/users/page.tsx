@@ -20,7 +20,7 @@ export default function UsersPage() {
   const [confirmModal, setConfirmModal] = useState<{
   open: boolean;
   user: User | null;
-  action: "suspend" | "activate" | null;
+  action: "deactivate" | "activate" | null;
 }>({
   open: false,
   user: null,
@@ -44,7 +44,7 @@ export default function UsersPage() {
     const isActive = user.status === "Active";
 
     if (isActive) {
-      setConfirmModal({ open: true, user, action: "suspend" });
+      setConfirmModal({ open: true, user, action: "deactivate" });
     } else {
       setConfirmModal({ open: true, user, action: "activate" });
     }
@@ -55,13 +55,13 @@ export default function UsersPage() {
     const userId = confirmModal.user.id;
     const userName = confirmModal.user.name;
 
-    if (confirmModal.action === "suspend") {
+    if (confirmModal.action === "deactivate") {
       setUsers((prev) =>
         prev.map((u) =>
           u.id === userId ? { ...u, status: "Suspended" as User["status"] } : u
         )
       );
-      toast.info(`User "${userName}" has been suspended`);
+      toast.info(`User "${userName}" has been deactivated`);
     } else {
       setUsers((prev) =>
         prev.map((u) =>
@@ -81,12 +81,12 @@ export default function UsersPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
             <h3 className="text-lg font-semibold text-black mb-4">
-              {confirmModal.action === "suspend" ? "Suspend Account" : "Activate Account"}
+              {confirmModal.action === "deactivate" ? "Deactivate Account" : "Activate Account"}
             </h3>
             <p className="text-sm text-black/60 mb-5">
-              {confirmModal.action === "suspend"
-                ? "Are you sure you want to suspend this account?"
-                : "Are you sure you want to reactivate this account?"}
+              {confirmModal.action === "deactivate"
+                ? "Do you want to deactivate this account?"
+                : "Do you want to reactivate this account?"}
             </p>
             <div className="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-5 space-y-3">
               <div className="flex items-center gap-2">
@@ -122,12 +122,12 @@ export default function UsersPage() {
               <button
                 onClick={handleConfirmAction}
                 className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors ${
-                  confirmModal.action === "suspend"
+                  confirmModal.action === "deactivate"
                     ? "bg-red-600 hover:bg-red-700"
                     : "bg-emerald-600 hover:bg-emerald-700"
                 }`}
               >
-                {confirmModal.action === "suspend" ? "Suspend" : "Activate"}
+                {confirmModal.action === "deactivate" ? "Deactivate" : "Activate"}
               </button>
             </div>
           </div>
@@ -215,7 +215,7 @@ export default function UsersPage() {
                   Status
                 </th>
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground">
-                  Actions
+                  Quick View
                 </th>
               </tr>
             </thead>
@@ -260,7 +260,7 @@ export default function UsersPage() {
                           title={
                             canToggle
                               ? isActive
-                                ? "Toggle to suspend"
+                                ? "Toggle to deactivate"
                                 : "Toggle to activate"
                               : "Inactive users cannot be toggled"
                           }
@@ -275,12 +275,10 @@ export default function UsersPage() {
                           className={`text-xs font-medium ${
                             isActive
                               ? "text-emerald-600 dark:text-emerald-400"
-                              : isSuspended
-                              ? "text-red-600 dark:text-red-400"
-                              : "text-gray-500"
+                              : "text-red-600 dark:text-red-400"
                           }`}
                         >
-                          {user.status}
+                          {isActive ? "Activate" : "Deactivate"}
                         </span>
                       </div>
                     </td>

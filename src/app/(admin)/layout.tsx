@@ -24,8 +24,8 @@ export default function AdminLayout({
   return (
     <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar />
-      <main className="flex-1 overflow-y-auto pl-16 pt-14 sm:pl-0 sm:pt-0">
-        <div className="px-4 py-6 pl-5 sm:px-6 lg:px-8 lg:py-8 max-w-[1600px] mx-auto">
+      <main className="flex-1 overflow-y-auto pl-16 sm:pl-1 pr-6 sm:pt-0">
+        <div className="mt-1 sm:ml-8 pr-16 ml-1 py-6 sm:px-10 lg:px-8 lg:py-8 max-w-[1600px] mx-auto">
           {children}
         </div>
       </main>

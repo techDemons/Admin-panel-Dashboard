@@ -114,7 +114,7 @@ export default function ProjectsPage() {
                   Status
                 </th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">
-                  Actions
+                  Quick View
                 </th>
               </tr>
             </thead>

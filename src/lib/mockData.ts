@@ -105,7 +105,7 @@ export const mockProjects: Project[] = [
     ],
     ctas: ["Subscribe now!", "Swipe up to learn more", "Buy now — 50% off"],
     subtitles: ["Bold White", "Neon Glow"],
-    totalCombinations: 48,
+    totalCombinations: 60,
   },
   {
     id: "PRJ-002",
